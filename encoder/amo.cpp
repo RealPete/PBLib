@@ -1,4 +1,5 @@
 #include "amo.h"
+#include <cmath>
 
 using namespace std;
 

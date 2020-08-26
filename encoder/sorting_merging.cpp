@@ -1,5 +1,6 @@
 #include "sorting_merging.h"
 #include <climits>
+#include <cmath>
 
 using namespace std;
 
