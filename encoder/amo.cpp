@@ -97,18 +97,8 @@ void AMO_Encoder::encodeEq(const SimplePBConstraint& pbconstraint, ClauseDatabas
 {
 	_literals.clear();
 	
-	for(uint i = 0;i < pbconstraint.getWeightedLiterals().size();++i){
+	for(size_t i = 0; i < pbconstraint.getWeightedLiterals().size(); ++i){
 		_literals.push_back(pbconstraint.getWeightedLiterals()[i].lit);
 	}
 	formula.addClause(_literals);
-}
-
-AMO_Encoder::AMO_Encoder(PBConfig& config) : Encoder(config)
-{
-
-}
-
-AMO_Encoder::~AMO_Encoder()
-{
-
 }

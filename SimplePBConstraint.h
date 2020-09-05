@@ -26,8 +26,8 @@ public:
     int64_t getMaxWeight() const;
     int64_t getMaxSum() const;
     
-    virtual void print(bool stderr = false) const;
-    virtual void printNoNL(bool stderr = false) const;
+    virtual void print(bool errStream = false) const;
+    virtual void printNoNL(bool errStream = false) const;
 };
 
 #endif // SIMPLEPBCONSTRAINT_H

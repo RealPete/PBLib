@@ -29,8 +29,8 @@ public:
     virtual int64_t encodingValue(const SimplePBConstraint& pbconstraint);
 
 
-    AMO_Encoder(PBConfig & config);
-    virtual ~AMO_Encoder();
+    AMO_Encoder(PBConfig & config) : Encoder(config) {};
+    ~AMO_Encoder() = default;
 };
 
 #endif // AMO_H

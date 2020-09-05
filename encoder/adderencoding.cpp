@@ -1,6 +1,9 @@
 // this is adapted code from minisat+
 #include "adderencoding.h"
 #include "../helper.h"
+#if defined(_MSC_VER)
+  #include <intrin.h>
+#endif
 
 using namespace std;
 
@@ -262,21 +265,22 @@ void AdderEncoding::encode(const shared_ptr< IncSimplePBConstraint >& pbconstrai
   isInc = false;
 }
 
-int PBLib::ld64(const uint64_t x)
+int PBLib::ld64(uint64_t x)
 {
-  return (sizeof(uint64_t) << 3) - __builtin_clzll (x);
-//   cout << "x " << x << endl;
-//   int ldretutn = 0;
-//   for (int i = 0; i < 63; ++i)
-//   {
-//     if ((x & (1 << i)) > 0)
-//     {
-//       cout << "ldretutn " << ldretutn << endl;
-//       ldretutn = i + 1;
-//     }
-//   }
-//   
-//   return ldretutn;
+#if defined(__GNUC__) || defined(__clang__)
+  return (sizeof(uint64_t) << 3) - __builtin_clzll(x);
+#elif defined(_MSC_VER)
+  return (sizeof(uint64_t) << 3) - __lzcnt64(x);
+#else
+  int n = 0;
+  if (x <= 0x00000000ffffffff){ n += 32; x <<= 32; }
+  if (x <= 0x0000ffffffffffff){ n += 16; x <<= 16; }
+  if (x <= 0x00ffffffffffffff){ n +=  8; x <<= 8; }
+  if (x <= 0x0fffffffffffffff){ n +=  4; x <<= 4; }
+  if (x <= 0x3fffffffffffffff){ n +=  2; x <<= 2; }
+  if (x <= 0x7fffffffffffffff){ n ++; }
+  return (sizeof(uint64_t) << 3) - n;
+#endif
 }
 
 void AdderEncoding::encode ( const SimplePBConstraint& pbconstraint, ClauseDatabase & formula, AuxVarManager & auxvars ) {

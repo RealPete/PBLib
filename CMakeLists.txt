@@ -42,7 +42,7 @@ ExternalProject_Add(minisat-src
 )
 
 find_package(Threads)
-find_package(ZLIB REQUIRED)
+find_package(ZLIB)
 
 # ------------- PBLib Library Definition -------------
 
