@@ -1,12 +1,14 @@
 cmake_minimum_required(VERSION 3.1)
-include(GNUInstallDirs)
-include(CMakePackageConfigHelpers)
 
 PROJECT(
   PBLib
   VERSION 0.1.0
   LANGUAGES CXX C
 )
+
+include(CMakePackageConfigHelpers)
+include(ExternalProject)
+include(GNUInstallDirs)
 
 # ------------- Compiler Configuration -------------
 
@@ -24,6 +26,20 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 set(CMAKE_CXX_STANDARD 11)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+
+# ------------- Find/Load External Dependencies -------------
+
+ExternalProject_Add(minisat-src
+  # Note: this seems to be the most up-to-date fork of MiniSAT
+  GIT_REPOSITORY    git@github.com:MontyThibault/minisat.git
+  GIT_TAG           origin/master
+  PREFIX            ${CMAKE_CURRENT_BINARY_DIR}/minisat
+  INSTALL_DIR       ${CMAKE_CURRENT_BINARY_DIR}/minisat/install
+  CMAKE_ARGS        -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}/minisat/install
+  EXCLUDE_FROM_ALL TRUE
+  STEP_TARGETS     install
+)
 
 find_package(Threads)
 find_package(ZLIB REQUIRED)
@@ -34,8 +50,6 @@ add_library(pblib
   "IncSimplePBConstraint.cpp"
   "IncrementalData.cpp"
   "PBConfig.cpp"
-  "PBFuzzer.cpp"
-  "PBParser.cpp"
   "SimplePBConstraint.cpp"
   "VectorClauseDatabase.cpp"
   "auxvarmanager.cpp"
@@ -75,16 +89,39 @@ target_link_libraries(pbencoder pblib)
 # ------------- PBLib Fuzzer -------------
 
 if(Threads_FOUND AND ZLIB_FOUND)
-  # TODO: Currrently does not link correctly
-  add_executable(fuzzer EXCLUDE_FROM_ALL fuzzer.cpp BasicPBSolver/SATSolverClauseDatabase.cpp)
-  target_link_libraries(fuzzer pblib Threads::Threads ZLIB::ZLIB minisat)
-  include_directories(fuzzer ${CMAKE_CURRENT_SOURCE_DIR}/BasicPBSolver/minisat/)
-  link_directories(fuzzer ${CMAKE_CURRENT_SOURCE_DIR}/BasicPBSolver/minisat/)
+  add_executable(fuzzer EXCLUDE_FROM_ALL
+    "fuzzer.cpp"
+    "PBFuzzer.cpp"
+    "BasicPBSolver/BasicSATSolver.cc"
+    "BasicPBSolver/SATSolverClauseDatabase.cpp"
+  )
+  add_dependencies(fuzzer minisat-src-install)
+  target_include_directories(fuzzer PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/minisat/install/include)
+  target_link_libraries(fuzzer
+    pblib
+    Threads::Threads
+    ZLIB::ZLIB
+    ${CMAKE_CURRENT_BINARY_DIR}/minisat/install/lib/libminisat.a
+  )
 endif()
 
 # ------------- PBLib Solver -------------
 
-# TODO: Integrate into top level CMakeList.txt
+if(Threads_FOUND AND ZLIB_FOUND)
+  add_executable(pbsolver EXCLUDE_FROM_ALL
+    "BasicPBSolver/main.cpp"
+    "BasicPBSolver/BasicSATSolver.cc"
+    "BasicPBSolver/SATSolverClauseDatabase.cpp"
+  )
+  add_dependencies(pbsolver minisat-src-install)
+  target_include_directories(pbsolver PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/minisat/install/include)
+  target_link_libraries(pbsolver
+    pblib
+    Threads::Threads
+    ZLIB::ZLIB
+    ${CMAKE_CURRENT_BINARY_DIR}/minisat/install/lib/libminisat.a
+  )
+endif()
 
 # ------------- Installation Target -------------
 

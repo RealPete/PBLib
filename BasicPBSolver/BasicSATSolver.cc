@@ -1,4 +1,4 @@
-#include "../BasicSATSolver.h"
+#include "BasicSATSolver.h"
 #include <iostream>
 #include <assert.h>
 
