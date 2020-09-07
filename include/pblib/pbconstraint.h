@@ -3,56 +3,57 @@
 
 #include <pblib/weightedlit.h>
 
-#include <vector>
 #include <cassert>
+#include <vector>
 
-namespace PBLib
-{
+namespace PBLib {
 enum Comparator { LEQ, GEQ, BOTH };
 
-class PBConstraint
-{
+class PBConstraint {
 private:
-    virtual bool operator==(const PBConstraint& other) const;
+  virtual bool operator==(const PBConstraint& other) const;
+
 protected:
-    int64_t leq;
-    int64_t geq;
-    std::vector<PBLib::WeightedLit> weighted_literals;
-    Comparator comparator;
-    std::vector<int32_t> conditionals;
-    
+  int64_t leq;
+  int64_t geq;
+  std::vector<PBLib::WeightedLit> weighted_literals;
+  Comparator comparator;
+  std::vector<int32_t> conditionals;
+
 public:
-   PBConstraint(std::vector<PBLib::WeightedLit> const & literals, Comparator comparator, int64_t less_eq, int64_t greater_eq);
-   PBConstraint(std::vector<PBLib::WeightedLit> const & literals, Comparator comparator, int64_t bound);
-   PBConstraint();
-   void addConditional(int32_t lit);
-   void addConditionals(std::vector<int32_t> lits);
-   void clearConditionals();
-   std::vector<int32_t> const & getConditionals() const;
-   
-    std::vector<PBLib::WeightedLit> & getWeightedLiterals();
-    std::vector<PBLib::WeightedLit> const & getWeightedLiterals() const;
-    int64_t getLeq() const;
-    int64_t getGeq() const;
-    virtual ~PBConstraint();
-    Comparator getComparator() const;
-    
-   PBConstraint getGeqConstraint() const;
-   PBConstraint getLeqConstraint() const;
-    
-    int64_t getMinSum() const;
-    int64_t getMaxSum() const;
-    
-    void setLeq(int64_t leq);
-    void setGeq(int64_t geq);
-    
-    int getN() const;
-    
-    void setComparator(Comparator comparator);
-    
-    virtual void printGeq(bool errStream = false) const;
-    virtual void print(bool errStream = false) const;
-    virtual void printNoNL(bool errStream = false) const;
+  PBConstraint(std::vector<PBLib::WeightedLit> const& literals,
+               Comparator comparator, int64_t less_eq, int64_t greater_eq);
+  PBConstraint(std::vector<PBLib::WeightedLit> const& literals,
+               Comparator comparator, int64_t bound);
+  PBConstraint();
+  void addConditional(int32_t lit);
+  void addConditionals(std::vector<int32_t> lits);
+  void clearConditionals();
+  std::vector<int32_t> const& getConditionals() const;
+
+  std::vector<PBLib::WeightedLit>& getWeightedLiterals();
+  std::vector<PBLib::WeightedLit> const& getWeightedLiterals() const;
+  int64_t getLeq() const;
+  int64_t getGeq() const;
+  virtual ~PBConstraint();
+  Comparator getComparator() const;
+
+  PBConstraint getGeqConstraint() const;
+  PBConstraint getLeqConstraint() const;
+
+  int64_t getMinSum() const;
+  int64_t getMaxSum() const;
+
+  void setLeq(int64_t leq);
+  void setGeq(int64_t geq);
+
+  int getN() const;
+
+  void setComparator(Comparator comparator);
+
+  virtual void printGeq(bool errStream = false) const;
+  virtual void print(bool errStream = false) const;
+  virtual void printNoNL(bool errStream = false) const;
 };
-}
-#endif // PBCONSTRAINT_H
+}  // namespace PBLib
+#endif  // PBCONSTRAINT_H

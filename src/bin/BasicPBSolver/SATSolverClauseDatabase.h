@@ -3,19 +3,17 @@
 
 #include <pblib/clausedatabase.h>
 
-#include "BasicSATSolver.h"
-
 #include <vector>
 
-class SATSolverClauseDatabase : public ClauseDatabase
-{
+#include "BasicSATSolver.h"
+
+class SATSolverClauseDatabase : public ClauseDatabase {
 protected:
-  BasicSATSolver * satsolver;
-  virtual void addClauseIntern(const std::vector< int32_t >& clause);
+  BasicSATSolver* satsolver;
+  virtual void addClauseIntern(const std::vector<int32_t>& clause);
 
 public:
-    SATSolverClauseDatabase(PBConfig config, BasicSATSolver * satsolver);
-
+  SATSolverClauseDatabase(PBConfig config, BasicSATSolver* satsolver);
 };
 
-#endif // SATSOLVERCLAUSEDATABASE_H
+#endif  // SATSOLVERCLAUSEDATABASE_H

@@ -48,35 +48,36 @@ find_package(ZLIB)
 # ------------- PBLib Library Definition -------------
 
 add_library(pblib
-  "src/IncSimplePBConstraint.cpp"
-  "src/IncrementalData.cpp"
-  "src/PBConfig.cpp"
-  "src/SimplePBConstraint.cpp"
-  "src/VectorClauseDatabase.cpp"
-  "src/auxvarmanager.cpp"
-  "src/clausedatabase.cpp"
-  "src/formula.cpp"
-  "src/helper.cpp"
-  "src/incpbconstraint.cpp"
-  "src/pb2cnf.cpp"
-  "src/pbconstraint.cpp"
-  "src/preencoder.cpp"
+  src/IncSimplePBConstraint.cpp
+  src/IncrementalData.cpp
+  src/PBConfig.cpp
+  src/PBParser.cpp
+  src/SimplePBConstraint.cpp
+  src/VectorClauseDatabase.cpp
+  src/auxvarmanager.cpp
+  src/clausedatabase.cpp
+  src/formula.cpp
+  src/helper.cpp
+  src/incpbconstraint.cpp
+  src/pb2cnf.cpp
+  src/pbconstraint.cpp
+  src/preencoder.cpp
 
-  "src/encoder/adderencoding.cpp"
-  "src/encoder/amo.cpp"
-  "src/encoder/bdd.cpp"
-  "src/encoder/BDD_Seq_Amo.cpp"
-  "src/encoder/bimander_amo_encoding.cpp"
-  "src/encoder/binary_amo.cpp"
-  "src/encoder/BinaryMerge.cpp"
-  "src/encoder/cardencoding.cpp"
-  "src/encoder/commander_encoding.cpp"
-  "src/encoder/Encoder.cpp"
-  "src/encoder/k-product.cpp"
-  "src/encoder/naive_amo_encoder.cpp"
-  "src/encoder/sorting_merging.cpp"
-  "src/encoder/SortingNetworks.cpp"
-  "src/encoder/SWC.cpp"
+  src/encoder/BDD_Seq_Amo.cpp
+  src/encoder/BinaryMerge.cpp
+  src/encoder/Encoder.cpp
+  src/encoder/SWC.cpp
+  src/encoder/SortingNetworks.cpp
+  src/encoder/adderencoding.cpp
+  src/encoder/amo.cpp
+  src/encoder/bdd.cpp
+  src/encoder/bimander_amo_encoding.cpp
+  src/encoder/binary_amo.cpp
+  src/encoder/cardencoding.cpp
+  src/encoder/commander_encoding.cpp
+  src/encoder/k-product.cpp
+  src/encoder/naive_amo_encoder.cpp
+  src/encoder/sorting_merging.cpp
 )
 
 # ------------- PBLib Executables -------------
@@ -93,7 +94,7 @@ if(Threads_FOUND AND ZLIB_FOUND)
   add_executable(fuzzer EXCLUDE_FROM_ALL
     "src/bin/fuzzer/fuzzer.cpp"
     "src/bin/fuzzer/PBFuzzer.cpp"
-    "src/bin/BasicPBSolver/BasicSATSolver.cc"
+    "src/bin/BasicPBSolver/BasicSATSolver.cpp"
     "src/bin/BasicPBSolver/SATSolverClauseDatabase.cpp"
   )
   add_dependencies(fuzzer minisat-src-install)
@@ -111,7 +112,7 @@ endif()
 if(Threads_FOUND AND ZLIB_FOUND)
   add_executable(pbsolver EXCLUDE_FROM_ALL
     "src/bin/BasicPBSolver/main.cpp"
-    "src/bin/BasicPBSolver/BasicSATSolver.cc"
+    "src/bin/BasicPBSolver/BasicSATSolver.cpp"
     "src/bin/BasicPBSolver/SATSolverClauseDatabase.cpp"
   )
   add_dependencies(pbsolver minisat-src-install)
