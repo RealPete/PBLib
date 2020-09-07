@@ -20,7 +20,7 @@ The user can also define constraints with two comparators (less equal and greate
 ** equivalent to sequential counter
 
 ### Simple Example
-Include the PBLib with "#include "PB2CNF.h" and create an instance of the PB2CNF class:
+Include the PBLib with "#include <pblib/PB2CNF.h>" and create an instance of the PB2CNF class:
 `   PB2CNF pb2cnf;`
  And now we can start to encode a PBConstraint with the following c++ code:
  

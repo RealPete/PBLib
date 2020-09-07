@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.1)
 
 PROJECT(
   PBLib
-  VERSION 0.1.0
+  VERSION 1.2.1
   LANGUAGES CXX C
 )
 
@@ -26,6 +26,7 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 set(CMAKE_CXX_STANDARD 11)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 # ------------- Find/Load External Dependencies -------------
@@ -47,53 +48,53 @@ find_package(ZLIB)
 # ------------- PBLib Library Definition -------------
 
 add_library(pblib
-  "IncSimplePBConstraint.cpp"
-  "IncrementalData.cpp"
-  "PBConfig.cpp"
-  "SimplePBConstraint.cpp"
-  "VectorClauseDatabase.cpp"
-  "auxvarmanager.cpp"
-  "clausedatabase.cpp"
-  "formula.cpp"
-  "helper.cpp"
-  "incpbconstraint.cpp"
-  "pb2cnf.cpp"
-  "pbconstraint.cpp"
-  "preencoder.cpp"
+  "src/IncSimplePBConstraint.cpp"
+  "src/IncrementalData.cpp"
+  "src/PBConfig.cpp"
+  "src/SimplePBConstraint.cpp"
+  "src/VectorClauseDatabase.cpp"
+  "src/auxvarmanager.cpp"
+  "src/clausedatabase.cpp"
+  "src/formula.cpp"
+  "src/helper.cpp"
+  "src/incpbconstraint.cpp"
+  "src/pb2cnf.cpp"
+  "src/pbconstraint.cpp"
+  "src/preencoder.cpp"
 
-  "encoder/adderencoding.cpp"
-  "encoder/amo.cpp"
-  "encoder/bdd.cpp"
-  "encoder/BDD_Seq_Amo.cpp"
-  "encoder/bimander_amo_encoding.cpp"
-  "encoder/binary_amo.cpp"
-  "encoder/BinaryMerge.cpp"
-  "encoder/cardencoding.cpp"
-  "encoder/commander_encoding.cpp"
-  "encoder/Encoder.cpp"
-  "encoder/k-product.cpp"
-  "encoder/naive_amo_encoder.cpp"
-  "encoder/sorting_merging.cpp"
-  "encoder/SortingNetworks.cpp"
-  "encoder/SWC.cpp"
+  "src/encoder/adderencoding.cpp"
+  "src/encoder/amo.cpp"
+  "src/encoder/bdd.cpp"
+  "src/encoder/BDD_Seq_Amo.cpp"
+  "src/encoder/bimander_amo_encoding.cpp"
+  "src/encoder/binary_amo.cpp"
+  "src/encoder/BinaryMerge.cpp"
+  "src/encoder/cardencoding.cpp"
+  "src/encoder/commander_encoding.cpp"
+  "src/encoder/Encoder.cpp"
+  "src/encoder/k-product.cpp"
+  "src/encoder/naive_amo_encoder.cpp"
+  "src/encoder/sorting_merging.cpp"
+  "src/encoder/SortingNetworks.cpp"
+  "src/encoder/SWC.cpp"
 )
 
 # ------------- PBLib Executables -------------
 
-add_executable(pbo2maxsat EXCLUDE_FROM_ALL pbo2maxsat.cpp)
+add_executable(pbo2maxsat EXCLUDE_FROM_ALL src/bin/pbo2maxsat.cpp)
 target_link_libraries(pbo2maxsat pblib)
 
-add_executable(pbencoder EXCLUDE_FROM_ALL pbencoder.cpp)
+add_executable(pbencoder EXCLUDE_FROM_ALL src/bin/pbencoder.cpp)
 target_link_libraries(pbencoder pblib)
 
 # ------------- PBLib Fuzzer -------------
 
 if(Threads_FOUND AND ZLIB_FOUND)
   add_executable(fuzzer EXCLUDE_FROM_ALL
-    "fuzzer.cpp"
-    "PBFuzzer.cpp"
-    "BasicPBSolver/BasicSATSolver.cc"
-    "BasicPBSolver/SATSolverClauseDatabase.cpp"
+    "src/bin/fuzzer/fuzzer.cpp"
+    "src/bin/fuzzer/PBFuzzer.cpp"
+    "src/bin/BasicPBSolver/BasicSATSolver.cc"
+    "src/bin/BasicPBSolver/SATSolverClauseDatabase.cpp"
   )
   add_dependencies(fuzzer minisat-src-install)
   target_include_directories(fuzzer PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/minisat/install/include)
@@ -109,9 +110,9 @@ endif()
 
 if(Threads_FOUND AND ZLIB_FOUND)
   add_executable(pbsolver EXCLUDE_FROM_ALL
-    "BasicPBSolver/main.cpp"
-    "BasicPBSolver/BasicSATSolver.cc"
-    "BasicPBSolver/SATSolverClauseDatabase.cpp"
+    "src/bin/BasicPBSolver/main.cpp"
+    "src/bin/BasicPBSolver/BasicSATSolver.cc"
+    "src/bin/BasicPBSolver/SATSolverClauseDatabase.cpp"
   )
   add_dependencies(pbsolver minisat-src-install)
   target_include_directories(pbsolver PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/minisat/install/include)
@@ -129,7 +130,10 @@ install(TARGETS pblib EXPORT PBLibTargets
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-  INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+install(
+  DIRECTORY include/pblib
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
 # ------------- Generate CMake Package -------------
