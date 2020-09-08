@@ -20,8 +20,8 @@ private:
     std::vector<Lit> outlits;
 
   public:
-    CardIncData(std::vector<Lit>& outlits);
-    virtual ~CardIncData();
+    CardIncData(std::vector<Lit>& outlits) : outlits(outlits) {}
+    virtual ~CardIncData() = default;
     virtual void encodeNewGeq(int64_t newGeq, ClauseDatabase& formula,
                               AuxVarManager& auxVars,
                               std::vector<int32_t> conditionals);
@@ -40,8 +40,8 @@ public:
   int64_t encodingValue(
       const std::shared_ptr<IncSimplePBConstraint>& pbconstraint);
 
-  CardEncoding(PBConfig& config);
-  virtual ~CardEncoding();
+  CardEncoding(PBConfig& config) : Encoder(config) {}
+  virtual ~CardEncoding() = default;
 };
 
 #endif  // CARDENCODING_H

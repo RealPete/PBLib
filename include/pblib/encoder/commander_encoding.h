@@ -36,7 +36,7 @@ public:
   int64_t encodingValue(const SimplePBConstraint& pbconstraint);
 
   commander_encoding(PBConfig& config);
-  virtual ~commander_encoding();
+  virtual ~commander_encoding() = default;
 };
 
 #endif  // COMMANDER_ENCODING_H

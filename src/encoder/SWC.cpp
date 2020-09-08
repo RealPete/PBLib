@@ -119,11 +119,6 @@ void SWC_Encoder::SWCIncData::encodeNewLeq(int64_t newLeq,
     formula.getConditionals().pop_back();
 }
 
-SWC_Encoder::SWCIncData::SWCIncData(vector<int32_t>& outlits)
-    : outlits(outlits) {}
-
-SWC_Encoder::SWCIncData::~SWCIncData() {}
-
 int64_t SWC_Encoder::encodingValue(const SimplePBConstraint& pbconstraint) {
   int n = pbconstraint.getN();
   int64_t k = pbconstraint.getLeq();
@@ -139,7 +134,3 @@ int64_t SWC_Encoder::encodingValue(
 
   return valueFunction(n * k * 4, n * k);
 }
-
-SWC_Encoder::SWC_Encoder(PBConfig config) : Encoder(config) {}
-
-SWC_Encoder::~SWC_Encoder() {}

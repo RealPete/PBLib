@@ -33,7 +33,3 @@ void statistic::printStatisticRelative() {
   //        << " adder: " << (double)num_adder_encodings / sum_encodings <<
   //        endl;
 }
-
-PBConfigClass::PBConfigClass() {}
-
-PBConfigClass::~PBConfigClass() {}

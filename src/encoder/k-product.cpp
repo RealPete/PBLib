@@ -126,5 +126,3 @@ k_Product::k_Product(PBConfig& config)
   k = config->k_product_k;
   assert(k >= 2);
 }
-
-k_Product::~k_Product() {}

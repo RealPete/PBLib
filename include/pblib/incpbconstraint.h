@@ -35,8 +35,15 @@ public:
                   int64_t greater_eq);
   IncPBConstraint(std::vector<PBLib::WeightedLit> const& literals,
                   PBLib::Comparator comparator, int64_t bound);
-  IncPBConstraint();
-  virtual ~IncPBConstraint();
+
+  IncPBConstraint()
+      : comparator(PBLib::BOTH),
+        leq(0),
+        geq(0),
+        init_leq(leq),
+        init_geq(geq),
+        isDualEncoded(false) {}
+  virtual ~IncPBConstraint() = default;
 
   void addConditional(int32_t lit);
   void addConditionals(std::vector<int32_t> lits);

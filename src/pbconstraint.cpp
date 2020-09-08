@@ -59,8 +59,6 @@ PBConstraint PBConstraint::getLeqConstraint() const {
   return c;
 }
 
-PBConstraint::PBConstraint() : comparator(LEQ), leq(0), geq(0) {}
-
 PBConstraint::PBConstraint(vector<WeightedLit> const& literals,
                            Comparator comparator, int64_t less_eq,
                            int64_t greater_eq)
@@ -94,8 +92,6 @@ vector<WeightedLit> const& PBConstraint::getWeightedLiterals() const {
 vector<WeightedLit>& PBConstraint::getWeightedLiterals() {
   return weighted_literals;
 }
-
-PBConstraint::~PBConstraint() {}
 
 bool PBConstraint::operator==(const PBConstraint& other) const { return false; }
 

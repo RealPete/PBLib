@@ -81,7 +81,3 @@ void Binary_AMO_Encoder::encode(const SimplePBConstraint& pbconstraint,
   for (int i = 0; i < pbconstraint.getConditionals().size(); ++i)
     formula.getConditionals().pop_back();
 }
-
-Binary_AMO_Encoder::Binary_AMO_Encoder(PBConfig& config) : Encoder(config) {}
-
-Binary_AMO_Encoder::~Binary_AMO_Encoder() {}

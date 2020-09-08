@@ -8,9 +8,6 @@
 
 using namespace std;
 
-AdderEncoding::AdderIncData::AdderIncData(vector<int32_t> result)
-    : result(result) {}
-
 void AdderEncoding::AdderIncData::encodeNewGeq(int64_t newGeq,
                                                ClauseDatabase& formula,
                                                AuxVarManager& auxVars,
@@ -46,8 +43,6 @@ void AdderEncoding::AdderIncData::encodeNewLeq(int64_t newLeq,
   for (int i = 0; i < conditionals.size(); ++i)
     formula.getConditionals().pop_back();
 }
-
-AdderEncoding::AdderIncData::~AdderIncData() {}
 
 void AdderEncoding::FA_extra(int32_t xc, int32_t xs, int32_t a, int32_t b,
                              int32_t c) {

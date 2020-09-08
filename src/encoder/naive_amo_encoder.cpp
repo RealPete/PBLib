@@ -43,7 +43,3 @@ void Naive_amo_encoder::encode(const SimplePBConstraint& pbconstraint,
   for (int i = 0; i < pbconstraint.getConditionals().size(); ++i)
     formula.getConditionals().pop_back();
 }
-
-Naive_amo_encoder::Naive_amo_encoder(PBConfig& config) : Encoder(config) {}
-
-Naive_amo_encoder::~Naive_amo_encoder() {}

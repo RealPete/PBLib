@@ -26,7 +26,7 @@ public:
 
   bool operator<(WeightedLit const& rhs) { return lit < rhs.lit; }
 
-  virtual ~WeightedLit(){};
+  virtual ~WeightedLit() = default;
 };
 }  // namespace PBLib
 #endif

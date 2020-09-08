@@ -156,8 +156,3 @@ void Bimander_amo_encoding::encode(const SimplePBConstraint& pbconstraint,
   for (int i = 0; i < pbconstraint.getConditionals().size(); ++i)
     formula.getConditionals().pop_back();
 }
-
-Bimander_amo_encoding::Bimander_amo_encoding(PBConfig& config)
-    : Encoder(config), naive_amo_encoder(config) {}
-
-Bimander_amo_encoding::~Bimander_amo_encoding() {}

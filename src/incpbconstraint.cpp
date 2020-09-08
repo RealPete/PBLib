@@ -15,14 +15,6 @@ PBConstraint IncPBConstraint::getNonIncConstraint() {
 
 Comparator IncPBConstraint::getComparator() const { return comparator; }
 
-IncPBConstraint::IncPBConstraint()
-    : comparator(BOTH),
-      leq(0),
-      geq(0),
-      init_leq(leq),
-      init_geq(geq),
-      isDualEncoded(false) {}
-
 IncPBConstraint::IncPBConstraint(vector<WeightedLit> const& literals,
                                  Comparator comparator, int64_t less_eq,
                                  int64_t greater_eq)
@@ -115,8 +107,6 @@ void IncPBConstraint::encodeNewLeq(int64_t newLeq, ClauseDatabase& formula,
     inc_simple_pb_constraint->encodeNewLeq(leq, formula, auxVars);
   }
 }
-
-IncPBConstraint::~IncPBConstraint() {}
 
 bool IncPBConstraint::operator==(const IncPBConstraint& other) const {
   return false;

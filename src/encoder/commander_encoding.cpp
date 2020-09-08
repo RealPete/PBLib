@@ -97,5 +97,3 @@ commander_encoding::commander_encoding(PBConfig& config)
     : Encoder(config), basic_amo_encoder(config), naive_amo_encoder(config) {
   k = config->commander_encoding_k;
 }
-
-commander_encoding::~commander_encoding() {}

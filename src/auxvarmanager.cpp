@@ -56,8 +56,3 @@ void AuxVarManager::startRememberReturnedVariables(vector<int32_t>* variables) {
 void AuxVarManager::stopRememerReturnedVariables() {
   rememberedVariables = nullptr;
 }
-
-AuxVarManager::AuxVarManager(int32_t first_free_variable)
-    : variable_offset(first_free_variable), rememberedVariables(nullptr) {}
-
-AuxVarManager::~AuxVarManager() {}

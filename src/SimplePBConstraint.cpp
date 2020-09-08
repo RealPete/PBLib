@@ -56,8 +56,6 @@ void SimplePBConstraint::print(bool errStream) const {
     PBConstraint::print(errStream);
 }
 
-SimplePBConstraint::~SimplePBConstraint() {}
-
 bool SimplePBConstraint::operator==(const SimplePBConstraint& other) const {
   return false;
 }

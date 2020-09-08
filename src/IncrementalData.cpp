@@ -1,16 +1,10 @@
 #include <pblib/IncrementalData.h>
 
 using namespace std;
-IncrementalData::IncrementalData() {}
-
-IncrementalData::~IncrementalData() {}
 
 bool IncrementalData::operator==(const IncrementalData& other) const {
   return false;
 }
-
-AMOIncrementalData::AMOIncrementalData(vector<int32_t>& geqOneClause)
-    : geqOneClause(geqOneClause) {}
 
 void AMOIncrementalData::encodeNewGeq(int64_t newGeq, ClauseDatabase& formula,
                                       AuxVarManager& auxVars,
@@ -29,8 +23,6 @@ void AMOIncrementalData::encodeNewLeq(int64_t newLeq, ClauseDatabase& formula,
                                       vector<int32_t> conditionals) {
   assert(false && "this should never happen");
 }
-
-AMOIncrementalData::~AMOIncrementalData() {}
 
 void IncrementalDontCare::encodeNewGeq(int64_t newGeq, ClauseDatabase& formula,
                                        AuxVarManager& auxVars,
@@ -53,7 +45,3 @@ void IncrementalDontCare::encodeNewLeq(int64_t newLeq, ClauseDatabase& formula,
   for (int i = 0; i < conditionals.size(); ++i)
     formula.getConditionals().pop_back();
 }
-
-IncrementalDontCare::IncrementalDontCare() {}
-
-IncrementalDontCare::~IncrementalDontCare() {}

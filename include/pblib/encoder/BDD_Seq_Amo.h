@@ -28,8 +28,8 @@ public:
               AuxVarManager& auxvars);
   int64_t encodingValue(const SimplePBConstraint& pbconstraint);
 
-  BDD_Seq_Amo(PBConfig& config);
-  virtual ~BDD_Seq_Amo();
+  BDD_Seq_Amo(PBConfig& config) : Encoder(config) {}
+  virtual ~BDD_Seq_Amo() = default;
 };
 
 #endif  // BDD_SEQ_AMO_H

@@ -64,9 +64,9 @@ public:
 
   int64_t encodingValue(const SimplePBConstraint& pbconstraint);
 
-  BDD_Encoder(PBConfig& config) : Encoder(config){};
+  BDD_Encoder(PBConfig& config) : Encoder(config) {}
 
-  virtual ~BDD_Encoder() {}
+  virtual ~BDD_Encoder() = default;
 };
 
 #endif  // BDD_Encoder_H

@@ -276,7 +276,3 @@ PBConstraint PBFuzzer::generatePBProblem(
   if (doScramble) scramble(constraints);
   return opt;
 }
-
-PBFuzzer::PBFuzzer() {}
-
-PBFuzzer::~PBFuzzer() {}

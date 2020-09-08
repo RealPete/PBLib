@@ -37,9 +37,9 @@ public:
   int max_opt_constraint_size = 10;
   int polarity_ratio = 50;
   int max_trivial_constraints = 1;
-  PBFuzzer();
+  PBFuzzer() = default;
 
-  virtual ~PBFuzzer();
+  virtual ~PBFuzzer() = default;
 
   // copy constraints! DO NOT USE A REFERENCE HERE
   void writeToPBFile(PBLib::PBConstraint opt_constraint,

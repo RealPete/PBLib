@@ -31,8 +31,8 @@ public:
               AuxVarManager& auxvars);
   int64_t encodingValue(const SimplePBConstraint& pbconstraint);
 
-  Binary_AMO_Encoder(PBConfig& config);
-  virtual ~Binary_AMO_Encoder();
+  Binary_AMO_Encoder(PBConfig& config) : Encoder(config) {}
+  virtual ~Binary_AMO_Encoder() = default;
 };
 
 #endif  // BINARY_AMO_H

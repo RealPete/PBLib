@@ -26,8 +26,9 @@ public:
               AuxVarManager& auxvars);
   int64_t encodingValue(const SimplePBConstraint& pbconstraint);
 
-  Naive_amo_encoder(PBConfig& config);
-  virtual ~Naive_amo_encoder();
+  Naive_amo_encoder(PBConfig& config) : Encoder(config) {}
+
+  virtual ~Naive_amo_encoder() = default;
 };
 
 #endif  // COMMANDER_ENCODING_H

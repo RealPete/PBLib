@@ -31,8 +31,8 @@ private:
                               AuxVarManager& auxVars,
                               std::vector<int32_t> conditionals);
 
-    AdderIncData(std::vector<int32_t> result);
-    virtual ~AdderIncData();
+    AdderIncData(std::vector<int32_t> result) : result(result) {}
+    virtual ~AdderIncData() = default;
   };
 
   bool isInc;

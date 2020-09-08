@@ -5,10 +5,6 @@
 
 using namespace PBLib;
 using namespace std;
-CardEncoding::CardIncData::~CardIncData() {}
-
-CardEncoding::CardIncData::CardIncData(vector<Lit>& outlits)
-    : outlits(outlits) {}
 
 void CardEncoding::CardIncData::encodeNewGeq(int64_t newGeq,
                                              ClauseDatabase& formula,
@@ -150,7 +146,3 @@ void CardEncoding::encode(const SimplePBConstraint& pbconstraint,
   for (int i = 0; i < pbconstraint.getConditionals().size(); ++i)
     formula.getConditionals().pop_back();
 }
-
-CardEncoding::CardEncoding(PBConfig& config) : Encoder(config) {}
-
-CardEncoding::~CardEncoding() {}

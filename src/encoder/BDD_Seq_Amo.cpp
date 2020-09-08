@@ -2,8 +2,6 @@
 
 using namespace std;
 
-BDD_Seq_Amo::BDD_Seq_Amo(PBConfig& config) : Encoder(config) {}
-
 void BDD_Seq_Amo::encode(const SimplePBConstraint& pbconstraint,
                          ClauseDatabase& formula, AuxVarManager& auxvars) {
   formula.addConditionals(pbconstraint.getConditionals());
@@ -54,5 +52,3 @@ void BDD_Seq_Amo::encode_intern(vector<Lit>& literals, ClauseDatabase& formula,
   formula.addClause(aux[literals.size() - 2], -literals[literals.size() - 2]);
   formula.addClause(-aux[literals.size() - 2], -literals[literals.size() - 1]);
 }
-
-BDD_Seq_Amo::~BDD_Seq_Amo() {}

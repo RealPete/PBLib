@@ -13,7 +13,7 @@ private:
   std::shared_ptr<IncrementalData> incremental_data;
 
 public:
-  virtual ~IncSimplePBConstraint();
+  virtual ~IncSimplePBConstraint() = default;
   IncSimplePBConstraint(int64_t max_sum, int64_t max_weight,
                         int64_t normalizedOffset, PBTYPE type,
                         std::vector<PBLib::WeightedLit>& literals,

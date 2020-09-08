@@ -25,7 +25,7 @@ public:
   SimplePBConstraint(int64_t max_sum, int64_t max_weight, PBTYPE type,
                      std::vector<PBLib::WeightedLit> const& literals,
                      PBLib::Comparator comparator, int64_t bound);
-  virtual ~SimplePBConstraint();
+  virtual ~SimplePBConstraint() = default;
 
   PBTYPE getType() const;
   int64_t getMaxWeight() const;

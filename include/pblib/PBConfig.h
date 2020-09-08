@@ -73,8 +73,8 @@ public:
   int64_t approximate_max_value = 1000;
   std::set<std::string> cmd_line_options;
 
-  PBConfigClass();
-  virtual ~PBConfigClass();
+  PBConfigClass() = default;
+  virtual ~PBConfigClass() = default;
 
   std::string config_name = "";
 };
