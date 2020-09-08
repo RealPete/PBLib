@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.10)
 
 PROJECT(
   PBLib
@@ -7,7 +7,7 @@ PROJECT(
 )
 
 include(CMakePackageConfigHelpers)
-include(ExternalProject)
+include(FetchContent)
 include(GNUInstallDirs)
 
 # ------------- Compiler Configuration -------------
@@ -31,19 +31,25 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 # ------------- Find/Load External Dependencies -------------
 
-ExternalProject_Add(minisat-src
-  # Note: this seems to be the most up-to-date fork of MiniSAT
-  GIT_REPOSITORY    git@github.com:MontyThibault/minisat.git
-  GIT_TAG           origin/master
-  PREFIX            ${CMAKE_CURRENT_BINARY_DIR}/minisat
-  INSTALL_DIR       ${CMAKE_CURRENT_BINARY_DIR}/minisat/install
-  CMAKE_ARGS        -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}/minisat/install
-  EXCLUDE_FROM_ALL TRUE
-  STEP_TARGETS     install
-)
-
 find_package(Threads)
 find_package(ZLIB)
+
+# Load MiniSAT if its dependencies are available
+if(Threads_FOUND AND ZLIB_FOUND)
+  # Note: this seems to be the most up-to-date fork of MiniSAT
+  FetchContent_Declare(
+    minisat
+    GIT_REPOSITORY    https://github.com/MontyThibault/minisat.git
+    GIT_TAG           origin/master
+  )
+
+  #TODO: From CMake 3.14 this should be replaced by FetchContent_MakeAvailable(minisat)
+  FetchContent_GetProperties(minisat)
+  if(NOT minisat_POPULATED)
+    FetchContent_Populate(minisat)
+    add_subdirectory(${minisat_SOURCE_DIR} ${minisat_BINARY_DIR} EXCLUDE_FROM_ALL)
+  endif()
+endif()
 
 # ------------- PBLib Library Definition -------------
 
@@ -97,13 +103,12 @@ if(Threads_FOUND AND ZLIB_FOUND)
     "src/bin/BasicPBSolver/BasicSATSolver.cpp"
     "src/bin/BasicPBSolver/SATSolverClauseDatabase.cpp"
   )
-  add_dependencies(fuzzer minisat-src-install)
-  target_include_directories(fuzzer PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/minisat/install/include)
+  target_include_directories(fuzzer PRIVATE ${minisat_SOURCE_DIR})
   target_link_libraries(fuzzer
     pblib
     Threads::Threads
     ZLIB::ZLIB
-    ${CMAKE_CURRENT_BINARY_DIR}/minisat/install/lib/libminisat.a
+    minisat-lib-static
   )
 endif()
 
@@ -115,13 +120,12 @@ if(Threads_FOUND AND ZLIB_FOUND)
     "src/bin/BasicPBSolver/BasicSATSolver.cpp"
     "src/bin/BasicPBSolver/SATSolverClauseDatabase.cpp"
   )
-  add_dependencies(pbsolver minisat-src-install)
-  target_include_directories(pbsolver PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/minisat/install/include)
+  target_include_directories(pbsolver PRIVATE ${minisat_SOURCE_DIR})
   target_link_libraries(pbsolver
     pblib
     Threads::Threads
     ZLIB::ZLIB
-    ${CMAKE_CURRENT_BINARY_DIR}/minisat/install/lib/libminisat.a
+    minisat-lib-static
   )
 endif()
 
