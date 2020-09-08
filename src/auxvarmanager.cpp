@@ -4,7 +4,7 @@
 
 using namespace std;
 
-int32_t AuxVarManager::getBiggestReturnedAuxVar() {
+int32_t AuxVarManager::getBiggestReturnedAuxVar() const {
   return variable_offset - 1;
 }
 

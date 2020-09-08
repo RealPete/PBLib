@@ -35,7 +35,7 @@ public:
   void freeVariables(int32_t start, int32_t end);
   void freeVariables(std::vector<int32_t>& variables);
 
-  int32_t getBiggestReturnedAuxVar();
+  int32_t getBiggestReturnedAuxVar() const;
   void startRememberReturnedVariables(std::vector<int32_t>* variables);
   void stopRememerReturnedVariables();
   void resetAuxVarsTo(int32_t new_first_free_variable);
