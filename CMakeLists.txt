@@ -98,10 +98,10 @@ target_link_libraries(pbencoder pblib)
 
 if(Threads_FOUND AND ZLIB_FOUND)
   add_executable(fuzzer EXCLUDE_FROM_ALL
-    "src/bin/fuzzer/fuzzer.cpp"
-    "src/bin/fuzzer/PBFuzzer.cpp"
-    "src/bin/BasicPBSolver/BasicSATSolver.cpp"
-    "src/bin/BasicPBSolver/SATSolverClauseDatabase.cpp"
+    src/bin/fuzzer/fuzzer.cpp
+    src/bin/fuzzer/PBFuzzer.cpp
+    src/bin/BasicPBSolver/BasicSATSolver.cpp
+    src/bin/BasicPBSolver/SATSolverClauseDatabase.cpp
   )
   target_include_directories(fuzzer PRIVATE ${minisat_SOURCE_DIR})
   target_link_libraries(fuzzer
@@ -116,9 +116,9 @@ endif()
 
 if(Threads_FOUND AND ZLIB_FOUND)
   add_executable(pbsolver EXCLUDE_FROM_ALL
-    "src/bin/BasicPBSolver/main.cpp"
-    "src/bin/BasicPBSolver/BasicSATSolver.cpp"
-    "src/bin/BasicPBSolver/SATSolverClauseDatabase.cpp"
+    src/bin/BasicPBSolver/main.cpp
+    src/bin/BasicPBSolver/BasicSATSolver.cpp
+    src/bin/BasicPBSolver/SATSolverClauseDatabase.cpp
   )
   target_include_directories(pbsolver PRIVATE ${minisat_SOURCE_DIR})
   target_link_libraries(pbsolver
@@ -144,17 +144,17 @@ install(
 # ------------- Generate CMake Package -------------
 
 write_basic_package_version_file(
-  "${CMAKE_CURRENT_BINARY_DIR}/PBLib/PBLibConfigVersion.cmake"
+  ${CMAKE_CURRENT_BINARY_DIR}/PBLib/PBLibConfigVersion.cmake
   VERSION ${PBLib_VERSION}
   COMPATIBILITY AnyNewerVersion
 )
 
 export(EXPORT PBLibTargets
-  FILE "${CMAKE_CURRENT_BINARY_DIR}/PBLib/PBLibTargets.cmake"
+  FILE ${CMAKE_CURRENT_BINARY_DIR}/PBLib/PBLibTargets.cmake
   NAMESPACE Upstream::
 )
 configure_file(cmake/PBLibConfig.cmake
-  "${CMAKE_CURRENT_BINARY_DIR}/PBLib/PBLibConfig.cmake"
+  ${CMAKE_CURRENT_BINARY_DIR}/PBLib/PBLibConfig.cmake
   COPYONLY
 )
 
@@ -165,7 +165,7 @@ install(EXPORT PBLibTargets
   DESTINATION ${ConfigPackageLocation}
 )
 install(
-  FILES cmake/PBLibConfig.cmake "${CMAKE_CURRENT_BINARY_DIR}/PBLib/PBLibConfigVersion.cmake"
+  FILES cmake/PBLibConfig.cmake ${CMAKE_CURRENT_BINARY_DIR}/PBLib/PBLibConfigVersion.cmake
   DESTINATION ${ConfigPackageLocation}
   COMPONENT Devel
 )
