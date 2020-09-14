@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.11)
 
 PROJECT(
   PBLib
@@ -26,8 +26,6 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 set(CMAKE_CXX_STANDARD 11)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 # ------------- Find/Load External Dependencies -------------
 
@@ -85,6 +83,10 @@ add_library(pblib
   src/encoder/naive_amo_encoder.cpp
   src/encoder/sorting_merging.cpp
 )
+target_include_directories(pblib PUBLIC
+  $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 
 # ------------- PBLib Executables -------------
 
@@ -135,6 +137,7 @@ install(TARGETS pblib EXPORT PBLibTargets
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 install(
   DIRECTORY include/pblib
@@ -143,29 +146,28 @@ install(
 
 # ------------- Generate CMake Package -------------
 
-write_basic_package_version_file(
-  ${CMAKE_CURRENT_BINARY_DIR}/PBLib/PBLibConfigVersion.cmake
-  VERSION ${PBLib_VERSION}
-  COMPATIBILITY AnyNewerVersion
-)
-
-export(EXPORT PBLibTargets
-  FILE ${CMAKE_CURRENT_BINARY_DIR}/PBLib/PBLibTargets.cmake
-  NAMESPACE Upstream::
-)
 configure_file(cmake/PBLibConfig.cmake
   ${CMAKE_CURRENT_BINARY_DIR}/PBLib/PBLibConfig.cmake
   COPYONLY
 )
+write_basic_package_version_file(
+  ${CMAKE_CURRENT_BINARY_DIR}/PBLib/PBLibConfigVersion.cmake
+  COMPATIBILITY SameMajorVersion
+)
+export(EXPORT PBLibTargets
+  FILE ${CMAKE_CURRENT_BINARY_DIR}/PBLib/PBLibTargets.cmake
+  NAMESPACE PBLib::
+)
 
 set(ConfigPackageLocation ${CMAKE_INSTALL_LIBDIR}/cmake/PBLib)
+install(FILES
+  ${CMAKE_CURRENT_BINARY_DIR}/PBLib/PBLibConfig.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/PBLib/PBLibConfigVersion.cmake
+  DESTINATION ${ConfigPackageLocation}
+)
+
 install(EXPORT PBLibTargets
   FILE PBLibTargets.cmake
   NAMESPACE PBLib::
   DESTINATION ${ConfigPackageLocation}
-)
-install(
-  FILES cmake/PBLibConfig.cmake ${CMAKE_CURRENT_BINARY_DIR}/PBLib/PBLibConfigVersion.cmake
-  DESTINATION ${ConfigPackageLocation}
-  COMPONENT Devel
 )
